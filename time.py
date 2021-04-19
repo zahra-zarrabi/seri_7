@@ -3,24 +3,15 @@ def menu():
 
     if item==1:
         print('Please enter two times:\nTime 1:')
-        hour = int(input("hour : "))
-        minute = int(input("Minutes : "))
-        second = int(input("Seconds :"))
-        hh = int(input("Time 2:\nhour : "))
-        mm = int(input("Minutes : "))
-        ss = int(input("Seconds :"))
-        print("sum of two time: ", sum_time(hour, minute, second,hh,mm,ss))
+        gettime()
+        print("sum of two time: ", sum_time())
+
         menu()
 
     elif item==2:
         print('Please enter two times:\nTime 1:')
-        hour = int(input("hour : "))
-        minute = int(input("Minutes : "))
-        second = int(input("Seconds :"))
-        hh = int(input("Time 2:\nhour : "))
-        mm = int(input("Minutes : "))
-        ss = int(input("Seconds :"))
-        print("Subtraction of two time: ", sub_time(hour, minute, second, hh, mm, ss))
+        gettime()
+        print("Subtraction of two time: ", sub_time())
         menu()
 
     elif item==3:
@@ -40,14 +31,25 @@ def menu():
     else:
         exit()
 
+def gettime():
+    hour = int(input("hour : "))
+    minute = int(input("Minutes : "))
+    second = int(input("Seconds :"))
+    hh = int(input("Time 2:\nhour : "))
+    mm = int(input("Minutes : "))
+    ss = int(input("Seconds :"))
+    global time1
+    global time2
+    time1 = {'h': hour, 'm': minute, 's': second}
+    time2 = {'h': hh, 'm': mm, 's': ss}
 
 def my_second(times):
-    t={}
-    t['h']=int(times/3600)
+
+    time1['h']=int(times/3600)
     times=times%3600
-    t['m']=int(times/60)
-    t['s']=int(times%60)
-    return t
+    time1['m']=int(times/60)
+    time1['s']=int(times%60)
+    return time1
 
 def my_time(h,m,s):
     h=h*3600
@@ -55,22 +57,30 @@ def my_time(h,m,s):
     r=h+m+s
     return r
 
-def sum_time(h,m,s,hh,mm,ss):
-    h = h * 3600
-    m = m * 60
-    hh=hh*3600
-    mm=mm*60
-    r = h + m + s+hh+mm+ss
-    return r
+def sum_time():
+    h = time1['h'] + time2['h']
+    m = time1['m'] + time2['m']
+    s=time1['s']+time2['s']
+    if s>60:
+        s-=60
+        m+=1
+    if m>60:
+        m-=60
+        h+=1
+    return (str(h) + ':' + str(m)+':'+str(s))
 
 
-def sub_time(h,m,s,hh,mm,ss):
-    h = h * 3600
-    m = m * 60
-    hh = hh * 3600
-    mm = mm * 60
-    r =( h + m + s )- (hh + mm + ss)
-    return r
+def sub_time():
+    h = time1['h'] - time2['h']
+    m = time1['m'] - time2['m']
+    s = time1['s'] - time2['s']
+    if s<0:
+        s+=60
+        m-=1
+    elif m<0:
+        m+=60
+        h-=1
+    return (str(h) + ':' + str(m)+':'+str(s))
 
 
 
